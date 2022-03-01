@@ -3,14 +3,28 @@ package hu.javaproject.processes.Store;
 import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import hu.javaproject.processes.Data.Process;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class ProcessRepository {
     private static final List<Process> processes = new ArrayList<>();
+
+    @PostConstruct
+    public void  init(){
+        processes.add(
+                new Process().ID(0).Description("A1").Duration(15)
+        );
+    }
+
+    public List<Process> GetAll(){
+        return this.processes;
+    }
 
     public Process GetProcessByID(int Id){
         Optional<Process> tmp = getOptionalById(Id);
