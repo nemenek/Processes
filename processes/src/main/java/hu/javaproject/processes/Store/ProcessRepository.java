@@ -28,7 +28,7 @@ public class ProcessRepository {
 
     public Process GetProcessByID(int Id){
         Optional<Process> tmp = getOptionalById(Id);
-        if(tmp.isEmpty()){
+        if(tmp.isPresent()){
             throw new RuntimeException("No such id is present in store: " + Id);
         }
         return tmp.get();
@@ -48,7 +48,7 @@ public class ProcessRepository {
     }
 
     public void add(Process process){
-        if(getOptionalById(process.GetID()).isEmpty()){
+        if(getOptionalById(process.GetID()).isPresent()){
             ProcessRepository.processes.add(process);
         }
         else throw new RuntimeException("ID is already present: " + process.GetID());
@@ -60,7 +60,7 @@ public class ProcessRepository {
 
     public boolean delete(int Id){
         Optional<Process> tmp = getOptionalById(Id);
-        if(tmp.isEmpty()){
+        if(tmp.isPresent()){
             return false;
         }
         else return ProcessRepository.processes.remove(tmp.get());
@@ -68,7 +68,7 @@ public class ProcessRepository {
 
     public void modify(Process process){
         Optional<Process> tmp = getOptionalById(process.GetID());
-        if(!tmp.isEmpty()){
+        if(!tmp.isPresent()){
             BeanUtils.copyProperties(tmp.get(), process);
         }
     }
